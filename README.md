@@ -1,21 +1,22 @@
 # CoreOS Essentials Installer and Toolbox Image
 
-The main goal of this project is to enable devops installing essential tools on CoreOS server which orginally has no software package manager. Beside this the docker image can be used as a toolbox with ZSH shell and Oh-My-Zsh configuration.
+The main goal of this project is to enable DevOps installing essential tools on CoreOS server which originally has no software package manager. Besides this, the Docker image can be used as a toolbox with ZSH shell and Oh-My-Zsh configuration.
 
 Curently available applications supported by **_CoreOS Essentials Installer_** are presented in the table below:
 
-| App Name | From deb/src | Executable |
-| -------- | :----------: | ---------- |
-| zsh      | src          | /opt/bin/zsh |
-| Oh-My-Zsh | src         | ~/.oh-my-zsh * | 
-| tmux     | deb          | /opt/bin/tmux |
-| git      | deb          | /opt/bin/git |
-| nano     | deb          | /opt/bin/nano |
-| mc       | src          | /opt/bin/mc |
+| App Name  | From deb/src | Installation Script | Executable @ CoreOS | Dependencies XX |
+| --------- | :----------: | ------------------- | ------------------- | -------------- |
+| zsh       | src          | install-zsh.sh      | /opt/bin/zsh        | n/a            |
+| Oh-My-Zsh | src          | install-ohmyzsh.sh  | ~/.oh-my-zsh X      | zsh, tmux, git |
+| tmux      | deb          | install-tmux.sh     | /opt/bin/tmux       | n/a            |
+| git       | deb          | install-git.sh      | /opt/bin/git        | n/a            |
+| nano      | deb          | install-nano.sh     | /opt/bin/nano       | n/a            |
+| mc        | src          | install-mc.sh       | /opt/bin/mc         | n/a            |
 
 Note that running toolbox image contains all the same applications.
 
-(*) Oh-My-Zsh is automatically installed for root nad core users only.
+(X) Oh-My-Zsh is automatically installed for root and core users only. \
+(XX) Dependencies are installed automatically.
 
 ## Very quick installation guide
 
@@ -33,7 +34,7 @@ Note that all mount poits (-v options) are required and cannot be modified. It's
 
 ## Install CoreOS Essentials automatically with cloud-config.yml during CoreOS installation process
 
-In order to install all applications supported by **_CoreOS Essentials Installer_** automatically during CoreOS's first boot, add the following yml snippet to your cloud-config.yml
+In order to install all applications supported by **_CoreOS Essentials Installer_** automatically during CoreOS's first boot, add the following YAML snippet to your cloud-config.yml
 
 ```yml
 coreos:
@@ -57,7 +58,7 @@ coreos:
         Type=oneshot
 ```
 
-One will be able to watch the installation process, which requires significant amount of time to complete, using the following command:
+One will be able to watch the installation process, which requires a significant amount of time to complete, using the following command:
 ```bash
 sudo journalctl -f -u essential-tools-installer.service
 ```
