@@ -18,7 +18,9 @@ Note that running toolbox image contains all the same applications.
 (X) Oh-My-Zsh is automatically installed for root and core users only. \
 (XX) Dependencies are installed automatically.
 
-## Very quick installation guide
+## Installation guides
+
+### Very quick installation guide
 
 Once CoreOS has been succesfully installed and internet connection has been established, all has to be done in order to install all supported applications is to run the following docker command as _root_ or _core_ user:
 
@@ -32,7 +34,7 @@ docker run --rm \
 ```
 Note that all mount poits (-v options) are required and cannot be modified. It's required to keep them as they are.
 
-## Install CoreOS Essentials automatically with cloud-config.yml during CoreOS installation process
+### Install CoreOS Essentials automatically with cloud-config.yml during CoreOS installation process
 
 In order to install all applications supported by **_CoreOS Essentials Installer_** automatically during CoreOS's first boot, add the following YAML snippet to your cloud-config.yml
 
@@ -62,7 +64,7 @@ One will be able to watch the installation process, which requires a significant
 ```bash
 sudo journalctl -f -u essential-tools-installer.service
 ```
-# Manual installation of selected applications only
+### Manual installation of selected applications only
 
 In order to install only selected application instead of all, apropriate installation script needs to be called. Look at the _Installation Script_ collumn in the table at the top of this document to find a script name for the application you want to install. The just use it with the following docker command:
 
