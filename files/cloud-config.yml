@@ -1,0 +1,73 @@
+# Copyright 2017 Jacek Kurasiewicz
+#
+#    Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+#
+#        http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
+
+###################################################################
+# Maitained by Jacek Kurasiewicz                                  #
+# Email: jk (at) adelaartech (dot) com                            #
+#                                                                 #
+# Example cloud-config entries supporting integration of the      # 
+# adelaar/coreos-ubuntu-toolbox docker toolbox image with CoreOS. #
+###################################################################
+
+coreos:
+  units:
+    # Runs only once and installs all essential tools coming with the installer
+    - name: essential-tools-installer.service
+      command: start
+      content: |
+        [Unit]
+        Description=Essential Tools Installer
+        After=docker.service
+        Requires=docker.service
+        ConditionFileExists=!/opt/systemd/essential-tools-installer
+
+        [Service]
+        ExecStartPre=/usr/bin/docker pull adelaar/coreos-ubuntu-toolbox
+        ExecStart=/usr/bin/docker run --rm -v /etc:/mnt/etc -v /root:/mnt/root -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-ubuntu-toolbox install-all.sh
+        ExecStartPost=/usr/bin/mkdir -p /opt/systemd
+        ExecStartPost=/usr/bin/touch /opt/systemd/essential-tools-installer
+        RemainAfterExit=yes
+        Type=oneshot
+
+write_files:
+  # Toolbox configuration for core user
+  - path: /home/core/.toolboxrc
+    owner: core
+    permissions: 0644
+    content: |
+      TOOLBOX_DOCKER_IMAGE=adelaar/coreos-ubuntu-toolbox
+      TOOLBOX_USER=core
+      TOOLBOX_DOCKER_TAG=latest
+
+      # BIND needed host directories
+      TOOLBOX_BIND="\
+          --bind=/:/coreos \
+          --bind=/etc:/mnt/etc --bind=/root:/mnt/root \
+          --bind=/home/core:/mnt/core --bind=/opt/bin:/opt/bin \
+          --bind=/run/docker.sock --bind=/run/fleet.sock \
+          --bind-ro=/usr/bin/docker --bind-ro=/usr/bin/fleetctl --bind-ro=/usr/bin/etcdctl \
+          --quiet \
+          --setenv=IGNOREEOF=4"
+    # Useful script makes installing essential tools easy
+    - path: /opt/bin/essential-tools-installer
+      permissions: 0755
+      owner: root
+      content: |
+        #!/bin/bash -ex
+
+        # Make script gives up on any error
+        set -e
+
+        /usr/bin/docker pull adelaar/coreos-ubuntu-toolbox
+        /usr/bin/docker run --rm -v /etc:/mnt/etc -v /root:/mnt/root -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-ubuntu-toolbox install-all.sh
