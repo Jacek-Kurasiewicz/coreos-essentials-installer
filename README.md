@@ -62,3 +62,16 @@ One will be able to watch the installation process, which requires a significant
 ```bash
 sudo journalctl -f -u essential-tools-installer.service
 ```
+# Manual installation of selected applications only
+
+In order to install only selected application instead of all, apropriate installation script needs to be called. Look at the _Installation Script_ collumn in the table at the top of this document to find a script name for the application you want to install. The just use it with the following docker command:
+
+```bash
+docker run --rm \
+ -v /etc:/mnt/etc \
+ -v /root:/mnt/root \
+ -v /home/core:/mnt/core \
+ -v /opt/bin:/opt/bin \
+ adelaar/coreos-ubuntu-toolbox install-<app-name>.sh
+```
+Note that if _install-ohmyzsh.sh_ script will be called, then additionally zsh, tmux and git applications will be installed automatically.
