@@ -17,7 +17,7 @@
 # Email: jk (at) adelaartech (dot) com                     
 #
 # Dockerfile to build OhMyZsh container images
-# Based on Latest Ubuntu Server
+# Based on the latest Ubuntu Server
 ############################################################
 
 # Set the base image to Ubuntu Server
@@ -37,7 +37,7 @@ COPY bin /root/bin
 #RUN /opt/bin/apt-proxy-setup.sh
 #RUN echo 'Acquire::http { Proxy "http://192.168.1.111:3142/"; };' >> /etc/apt/apt.conf.d/01proxy && \
 
-    # Upgrade
+    # Upgrade Ubuntu
 RUN apt-get update && \
     apt-get upgrade -y && \
 
@@ -45,10 +45,6 @@ RUN apt-get update && \
     apt-get install -y zsh zsh-common git git-core tmux nano mc sed curl wget \
         sudo net-tools inetutils-ping bash-completion mc tmux openssh-client vim \
         gcc make autoconf yodl libncursesw5-dev texinfo checkinstall tzdata && \
-
-    # Add /root/bin to global PATH
-    #sed -i '/^PATH=/c\PATH=/root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games' /etc/environment && \
-    #echo "export PATH=/root/bin:$PATH" >> /etc/zsh/zshenv && \
 
     # Install docker-compose
     curl -L https://github.com/docker/compose/releases/download/${DOCKERCOMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && \
@@ -64,7 +60,8 @@ RUN apt-get update && \
 
     apt-get clean && \
     rm -rf /var/lib/apt
-    #rm /etc/apt/apt.conf.d/01proxy 2> /dev/null
+
+#RUN rm /etc/apt/apt.conf.d/01proxy 2> /dev/null
 
 ENV DEBIAN_FRONTEND=teletype
 
