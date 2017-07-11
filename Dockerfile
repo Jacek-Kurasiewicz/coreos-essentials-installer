@@ -64,7 +64,7 @@ RUN apt-get update && \
 
     apt-get clean && \
     rm -rf /var/lib/apt && \
-    rm /etc/apt/apt.conf.d/01proxy
+    rm /etc/apt/apt.conf.d/01proxy 2> /dev/null
 
 ENV DEBIAN_FRONTEND=teletype
 
