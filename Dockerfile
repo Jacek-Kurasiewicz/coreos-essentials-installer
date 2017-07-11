@@ -35,10 +35,10 @@ ENV DOCKERCOMPOSE_VERSION=1.14.0
 COPY bin /root/bin
 
 #RUN /opt/bin/apt-proxy-setup.sh
-RUN echo 'Acquire::http { Proxy "http://192.168.1.111:3142/"; };' >> /etc/apt/apt.conf.d/01proxy && \
+#RUN echo 'Acquire::http { Proxy "http://192.168.1.111:3142/"; };' >> /etc/apt/apt.conf.d/01proxy && \
 
     # Upgrade
-    apt-get update && \
+RUN apt-get update && \
     apt-get upgrade -y && \
 
     # Install needed packages
