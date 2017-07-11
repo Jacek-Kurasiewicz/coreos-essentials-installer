@@ -63,8 +63,8 @@ RUN apt-get update && \
     rm -R ~/.oh-my-zsh/plugins/last-working-dir && \
 
     apt-get clean && \
-    rm -rf /var/lib/apt && \
-    rm /etc/apt/apt.conf.d/01proxy 2> /dev/null
+    rm -rf /var/lib/apt
+    #rm /etc/apt/apt.conf.d/01proxy 2> /dev/null
 
 ENV DEBIAN_FRONTEND=teletype
 
