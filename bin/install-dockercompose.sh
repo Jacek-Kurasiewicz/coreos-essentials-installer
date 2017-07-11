@@ -15,7 +15,7 @@
 #    limitations under the License.
 
 # Requires the following command with specific mount points:
-# docker run --rm -v /root:/mnt/root -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-ubuntu-toolbox /opt/bin/install-ohmyzsh.sh
+# docker run --rm -v /root:/mnt/root -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-essentials-installer /opt/bin/install-ohmyzsh.sh
 
 # Make script gives up on any error
 set -e

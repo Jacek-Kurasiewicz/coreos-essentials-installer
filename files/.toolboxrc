@@ -17,10 +17,10 @@
 # Maitained by Jacek Kurasiewicz jk (at) adelaartech (dot) com    #
 #                                                                 #
 # Example toolbox file to be used with               			  #
-# adelaar/coreos-ubuntu-toolbox docker toolbox image 			  #
+# adelaar/coreos-essentials-installer docker toolbox image 			  #
 ###################################################################
 
-TOOLBOX_DOCKER_IMAGE=adelaar/coreos-ubuntu-toolbox
+TOOLBOX_DOCKER_IMAGE=adelaar/coreos-essentials-installer
 TOOLBOX_USER=core
 TOOLBOX_DOCKER_TAG=latest
 

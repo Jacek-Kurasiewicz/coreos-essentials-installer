@@ -17,5 +17,5 @@
 # Make script gives up on any error
 set -e
 
-docker build --rm --no-cache -t adelaar/coreos-ubuntu-toolbox:latest .
-docker push adelaar/coreos-ubuntu-toolbox:latest
+docker build --rm --no-cache -t adelaar/coreos-essentials-installer:latest .
+docker push adelaar/coreos-essentials-installer:latest

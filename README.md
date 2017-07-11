@@ -1,3 +1,19 @@
+<!-- ###########################################################################
+# Copyright 2017 Jacek Kurasiewicz
+#
+#    Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+#
+#        http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License. 
+########################################################################### -->
+
 # CoreOS Essentials Installer and Toolbox Image
 
 The main goal of this project is to enable DevOps installing essential tools on CoreOS server which originally has no software package manager. Besides this, the Docker image can be used as a toolbox with ZSH shell and Oh-My-Zsh configuration.
@@ -12,6 +28,7 @@ Curently available applications supported by **_CoreOS Essentials Installer_** a
 | git       | deb          | install-git.sh      | /opt/bin/git        | n/a            |
 | nano      | deb          | install-nano.sh     | /opt/bin/nano       | n/a            |
 | mc        | src          | install-mc.sh       | /opt/bin/mc         | n/a            |
+| docker-compose        | src          | install-dockercompose.sh       | /opt/bin/docker-compose         | n/a            |
 
 Note that running toolbox image contains all the same applications.
 
@@ -30,7 +47,7 @@ docker run --rm \
  -v /root:/mnt/root \
  -v /home/core:/mnt/core \
  -v /opt/bin:/opt/bin \
- adelaar/coreos-ubuntu-toolbox install-all.sh
+ adelaar/coreos-essentials-installer install-all.sh
 ```
 Note that all mount poits (-v options) are required and cannot be modified. It's required to keep them as they are.
 
@@ -52,8 +69,8 @@ coreos:
         ConditionFileExists=!/opt/systemd/essential-tools-installer
 
         [Service]
-        ExecStartPre=/usr/bin/docker pull adelaar/coreos-ubuntu-toolbox
-        ExecStart=/usr/bin/docker run --rm -v /etc:/mnt/etc -v /root:/mnt/root -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-ubuntu-toolbox install-all.sh
+        ExecStartPre=/usr/bin/docker pull adelaar/coreos-essentials-installer
+        ExecStart=/usr/bin/docker run --rm -v /etc:/mnt/etc -v /root:/mnt/root -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-essentials-installer install-all.sh
         ExecStartPost=/usr/bin/mkdir -p /opt/systemd
         ExecStartPost=/usr/bin/touch /opt/systemd/essential-tools-installer
         RemainAfterExit=yes
@@ -74,6 +91,6 @@ docker run --rm \
  -v /root:/mnt/root \
  -v /home/core:/mnt/core \
  -v /opt/bin:/opt/bin \
- adelaar/coreos-ubuntu-toolbox install-<app-name>.sh
+ adelaar/coreos-essentials-installer install-<app-name>.sh
 ```
 Note that if _install-ohmyzsh.sh_ script will be called, then additionally zsh, tmux and git applications will be installed automatically.

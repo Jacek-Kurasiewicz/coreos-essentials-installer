@@ -15,7 +15,7 @@
 #    limitations under the License.
 
 # Requires the following command with specific mount points:
-# docker run --rm -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-ubuntu-toolbox /opt/bin/install-git.sh
+# docker run --rm -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-essentials-installer install-git.sh
 
 # Make script gives up on any error
 set -e

@@ -15,7 +15,7 @@
 #    limitations under the License.
 
 # Requires the following command with specific mount points:
-# docker run --rm -v /opt/bin:/opt/bin adelaar/coreos-ubuntu-toolbox install-mc.sh
+# docker run --rm -v /opt/bin:/opt/bin adelaar/coreos-essentials-installer install-mc.sh
 
 # Make script gives up on any error
 set -e

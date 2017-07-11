@@ -17,7 +17,7 @@
 # Email: jk (at) adelaartech (dot) com                            #
 #                                                                 #
 # Example cloud-config entries supporting integration of the      # 
-# adelaar/coreos-ubuntu-toolbox docker toolbox image with CoreOS. #
+# adelaar/coreos-essentials-installer docker toolbox image with CoreOS. #
 ###################################################################
 
 coreos:
@@ -33,8 +33,8 @@ coreos:
         ConditionFileExists=!/opt/systemd/essential-tools-installer
 
         [Service]
-        ExecStartPre=/usr/bin/docker pull adelaar/coreos-ubuntu-toolbox
-        ExecStart=/usr/bin/docker run --rm -v /etc:/mnt/etc -v /root:/mnt/root -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-ubuntu-toolbox install-all.sh
+        ExecStartPre=/usr/bin/docker pull adelaar/coreos-essentials-installer
+        ExecStart=/usr/bin/docker run --rm -v /etc:/mnt/etc -v /root:/mnt/root -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-essentials-installer install-all.sh
         ExecStartPost=/usr/bin/mkdir -p /opt/systemd
         ExecStartPost=/usr/bin/touch /opt/systemd/essential-tools-installer
         RemainAfterExit=yes
@@ -46,7 +46,7 @@ write_files:
     owner: core
     permissions: 0644
     content: |
-      TOOLBOX_DOCKER_IMAGE=adelaar/coreos-ubuntu-toolbox
+      TOOLBOX_DOCKER_IMAGE=adelaar/coreos-essentials-installer
       TOOLBOX_USER=core
       TOOLBOX_DOCKER_TAG=latest
 
@@ -69,5 +69,5 @@ write_files:
         # Make script gives up on any error
         set -e
 
-        /usr/bin/docker pull adelaar/coreos-ubuntu-toolbox
-        /usr/bin/docker run --rm -v /etc:/mnt/etc -v /root:/mnt/root -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-ubuntu-toolbox install-all.sh
+        /usr/bin/docker pull adelaar/coreos-essentials-installer
+        /usr/bin/docker run --rm -v /etc:/mnt/etc -v /root:/mnt/root -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-essentials-installer install-all.sh

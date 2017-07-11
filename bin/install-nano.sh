@@ -15,7 +15,7 @@
 #    limitations under the License.
 
 # Requires the following command with specific mount points:
-# docker run --rm -v /opt/bin:/opt/bin adelaar/coreos-ubuntu-toolbox install-nano.sh
+# docker run --rm -v /opt/bin:/opt/bin adelaar/coreos-essentials-installer install-nano.sh
 
 # Make script gives up on any error
 set -e
