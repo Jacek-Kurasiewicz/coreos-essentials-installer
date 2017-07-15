@@ -50,7 +50,7 @@ coreos:
         Description=Essential Tools Installer
         After=docker.service
         Requires=docker.service
-        ConditionFileExists=!/opt/systemd/essential-tools-installer
+        ConditionPathExists=!/opt/systemd/essential-tools-installer
 
         [Service]
         ExecStartPre=/usr/bin/docker pull adelaar/coreos-essentials-installer
