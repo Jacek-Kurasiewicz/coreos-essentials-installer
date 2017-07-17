@@ -15,35 +15,54 @@
 #    limitations under the License.
 
 # Requires the following command with specific mount points:
-# docker run --rm -v /home/core:/mnt/core -v /opt/bin:/opt/bin adelaar/coreos-essentials-installer install-git.sh
+# docker run --rm -v /opt/bin:/opt/bin adelaar/coreos-essentials-installer install-git.sh
 
 # Make script gives up on any error
 set -e
 
 COMMAND="git"
-FULL_COMMAND="/usr/bin/git"
+FULL_COMMAND="/opt/bin/git"
 
-mountpoint /mnt/etc; printf "$?\n"
-mountpoint /mnt/root; printf "$?\n"
-mountpoint /mnt/core; printf "$?\n"
 mountpoint /opt/bin; printf "$?\n"
 
-# Create required directories
-echo "Creating required directories /opt/bin/$COMMAND-bin/libs"
-mkdir -p  /opt/bin/$COMMAND-bin/libs
+if [ -f $FULL_COMMAND ]; then
+    echo "git seems to be installed. Uninstall first!"
+    echo "Nothing to do. Quiting git installer..."
+    exit 1
+fi
+
+apt-get update
+apt-get -y build-dep git
+apt-get install -y libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev
+
+# Clone mc repo if hasn't been cloned before and change to it
+if [ ! -d ./git ]; then
+    git clone https://github.com/git/git.git
+fi
+cd git
+
+# Get lastest stable or RC version, but you can change to any valid branch/tag/commit id
+BRANCH=$(git describe --abbrev=0 --tags)
+# Go to desired branch
+git checkout $BRANCH
+
+make prefix=${FULL_COMMAND}-bin all
+make prefix=${FULL_COMMAND}-bin install
+
 # Copy the dependencies
-cpld $FULL_COMMAND /opt/bin/$COMMAND-bin/libs
-# Copy the nano binary
-echo "Copying $COMMAND binary to /opt/bin/$COMMAND-bin"
-cp  $FULL_COMMAND /opt/bin/$COMMAND-bin
+cpld ${FULL_COMMAND}-bin/bin/${COMMAND} /opt/bin/${COMMAND}-bin/libs
+cp /usr/lib/x86_64-linux-gnu/libcurl-gnutls.so.4 /opt/bin/${COMMAND}-bin/libs
+chmod +x /opt/bin/${COMMAND}-bin/libs/*
 
 echo "Creating an executable script /opt/bin/$COMMAND"
-cat <<EOT >> /opt/bin/$COMMAND
+cat <<EOT >> /opt/bin/${COMMAND}
 #!/bin/bash 
 
-LD_LIBRARY_PATH="/opt/bin/$COMMAND-bin/libs" /opt/bin/$COMMAND-bin/$COMMAND "\$@"
+LD_LIBRARY_PATH="/opt/bin/${COMMAND}-bin/libs" /opt/bin/${COMMAND}-bin/bin/${COMMAND} "\$@"
 EOT
 
-chmod +x /opt/bin/$COMMAND
+chmod +x /opt/bin/${COMMAND}
+
+rm -Rf ./git
 
 echo "$COMMAND has been succesfully installed ;)"
