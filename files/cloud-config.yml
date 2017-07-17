@@ -47,16 +47,18 @@ write_files:
     permissions: 0644
     content: |
       TOOLBOX_DOCKER_IMAGE=adelaar/coreos-essentials-installer
-      TOOLBOX_USER=core
+      TOOLBOX_USER=root
       TOOLBOX_DOCKER_TAG=latest
 
       # BIND needed host directories
       TOOLBOX_BIND="\
           --bind=/:/coreos \
-          --bind=/etc:/mnt/etc --bind=/root:/mnt/root \
-          --bind=/home/core:/mnt/core --bind=/opt/bin:/opt/bin \
-          --bind=/run/docker.sock --bind=/run/fleet.sock \
-          --bind-ro=/usr/bin/docker --bind-ro=/usr/bin/fleetctl --bind-ro=/usr/bin/etcdctl \
+          --bind=/etc:/mnt/etc \
+          --bind=/root:/mnt/root \
+          --bind=/home/core:/mnt/core \
+          --bind=/opt/bin:/opt/bin \
+          --bind=/run/docker.sock \
+          --bind-ro=/usr/bin/docker \
           --quiet \
           --setenv=IGNOREEOF=4"
     # Useful script makes installing essential tools easy
