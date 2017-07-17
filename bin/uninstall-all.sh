@@ -28,9 +28,6 @@ mountpoint /opt/bin; printf "$?\n"
 # Remove docker-compose
 rm -Rf /opt/bin/docker-compose
 
-# Remove git
-rm -Rf /opt/bin/git-bin /opt/bin/git
-
 # Remove mc
 rm -Rf /opt/bin/mc-bin /opt/bin/mc \
 	/mnt/core/.config/mc \

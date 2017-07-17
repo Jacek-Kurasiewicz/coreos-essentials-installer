@@ -31,11 +31,6 @@ if [ ! -f /opt/bin/zsh ]; then
     echo "ZSH has been succesfully installed ;)"
 fi
 
-if [ ! -f /opt/bin/git ]; then
-    echo "Git command not foud. Installing git..."
-    install-git.sh
-fi
-
 if [ ! -f /opt/bin/tmux ]; then
     echo "Tmux command not foud. Installing tmux..."
     install-tmux.sh

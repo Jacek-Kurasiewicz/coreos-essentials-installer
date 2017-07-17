@@ -9,7 +9,6 @@ Curently available applications supported by **_CoreOS Essentials Installer_** a
 | zsh       | src          | install-zsh.sh      | /opt/bin/zsh        | n/a            |
 | Oh-My-Zsh | src          | install-ohmyzsh.sh  | ~/.oh-my-zsh X      | zsh, tmux, git |
 | tmux      | deb          | install-tmux.sh     | /opt/bin/tmux       | n/a            |
-| git       | deb          | install-git.sh      | /opt/bin/git        | n/a            |
 | nano      | deb          | install-nano.sh     | /opt/bin/nano       | n/a            |
 | mc        | src          | install-mc.sh       | /opt/bin/mc         | n/a            |
 | docker-compose        | src          | install-dockercompose.sh       | /opt/bin/docker-compose         | n/a            |
