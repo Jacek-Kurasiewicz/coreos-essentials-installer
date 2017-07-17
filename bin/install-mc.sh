@@ -37,7 +37,7 @@ apt-get update
 apt-get -y build-dep mc
 apt-get -y install autopoint autogen autoconf libtool gettext 
 
-# Clone zsh repo if hasn't been cloned before and change to it
+# Clone mc repo if hasn't been cloned before and change to it
 if [ ! -d ./mc ]; then
     git clone https://github.com/MidnightCommander/mc.git mc
 fi
